@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-helm-guestbook
+spec:
+  replicas: {{ .Values.replicaCount }}
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-helm-guestbook
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-helm-guestbook
+    spec:
+      containers:
+      - name: helm-guestbook
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        ports:
+        - containerPort: 9898
+        resources:
+          requests:
+            cpu: 100m
+            memory: 64Mi
