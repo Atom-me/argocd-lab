@@ -1,5 +1,5 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: guestbook-ui
 spec:
@@ -8,6 +8,11 @@ spec:
   selector:
     matchLabels:
       app: guestbook-ui
+  strategy:
+    canary:
+      steps:
+      - setWeight: 50
+      - pause: {duration: 60}
   template:
     metadata:
       labels:
