@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: demo-app
+spec:
+  replicas: 2
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: demo-app
+  strategy:
+    canary:
+      steps:
+      - setWeight: 50
+      - pause: {duration: 60}
+  template:
+    metadata:
+      labels:
+        app: demo-app
+    spec:
+      imagePullSecrets:
+      - name: regcred
+      containers:
+      - name: demo-app
+        image: registry.shadowdog.work/demo-app:v0-init
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
