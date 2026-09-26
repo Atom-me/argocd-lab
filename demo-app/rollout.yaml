@@ -22,7 +22,7 @@ spec:
       - name: regcred
       containers:
       - name: demo-app
-        image: registry.shadowdog.work/demo-app:v0-init
+        image: registry.shadowdog.work/demo-app:1d53082981f07116b00dbffc1d2f0cabb8bee3b4
         ports:
         - containerPort: 80
         resources:
